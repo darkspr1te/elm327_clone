@@ -1,0 +1,33 @@
+ build/default/production/main.d  \
+ build/default/production/main.p1:  \
+ main.c  \
+../../../../opt/microchip/xc8/v1.42/include/plib/EEP.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/portb.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/rtcc.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/compare.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/xlcd.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/i2c.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/flash.h  \
+io_bus.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/capture.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/ctmu.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/mwire.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/dpslp.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/reset.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/io.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/usart.h  \
+config.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/sw_uart.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/adc.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/sw_spi.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/timers.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/can2510.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/pmp.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/pcpwm.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/pconfig.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/pps.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/delays.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/sw_i2c.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/ancomp.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/pwm.h  \
+../../../../opt/microchip/xc8/v1.42/include/plib/spi.h 
