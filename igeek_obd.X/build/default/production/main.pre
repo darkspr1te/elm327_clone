@@ -36325,8 +36325,8 @@ extern volatile __bit nWRITE @ (((unsigned) &SSPSTAT)*8) + 2;
 #pragma config XINST = OFF
 
 
+#pragma config FOSC = HS1
 
-#pragma config FOSC = XT
 #pragma config PLLCFG = OFF
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
@@ -36509,21 +36509,23 @@ extern char * ultoa(char * buf, unsigned long val, int base);
 
 extern char * ftoa(float f, int * status);
 
-# 70 "main.c"
+# 81 "main.c"
 void Delay(unsigned int count);
 void Heartbeat(void);
 
-int heartbeatCount;
-int heartbeatCountTwo;
-unsigned char Txdata[] = "\r\niGeek ODB2 Open Sourced ELM327 Clone firmware ";
+volatile int heartbeatCount;
+
+unsigned char device_name[] = "\n\riGeek ODB2 Open Sourced ELM327 Clone firmware\r\n";
+unsigned char device_name_two[] = "\r\nTest Statement Two";
 unsigned char Newline[] = "\n\r";
 unsigned char spacing[] = "   ";
-unsigned char inttext[] = "   INT ";
+unsigned char inttext[] = "   INNT ";
 unsigned char newvals[] = "";
 float volts;
 unsigned int ADCValue = 0;
 unsigned char ADCStringVal[4];
 unsigned char ADCStringValTwo[4];
+unsigned char stringval[10];
 
 
 void setup (void)
@@ -36535,16 +36537,9 @@ ANCON1 = 0;
 WPUB = 0b00000000;
 
 
+PORTB=0b1111111;
 
-PORTBbits.RB0 = 1;
-PORTBbits.RB1 = 1;
-PORTBbits.RB2 = 1;
-PORTBbits.RB3 = 1;
-PORTBbits.RB4 = 1;
-PORTBbits.RB5 = 1;
-PORTBbits.RB6 = 1;
-PORTBbits.RB7 = 1;
-
+# 118
 }
 void Delay(unsigned int count)
 {
@@ -36552,25 +36547,6 @@ void Delay(unsigned int count)
 while(count--);
 }
 
-void Heartbeat(void)
-{
-
-if (heartbeatCount < 255)
-{
-heartbeatCount++;
-}
-else
-{
-heartbeatCount = 0;
-PORTBbits.RB4 ^= 1;
-PORTBbits.RB5 ^= 1;
-
-PORTBbits.RB6 ^= 1;
-PORTBbits.RB7 ^= 1;
-
-
-}
-}
 
 
 
@@ -36612,6 +36588,14 @@ processedString[2] = '\0';
 }
 return processedString;
 }
+void putch(char data) {
+while (!TXIF)
+continue;
+TXREG = data;
+}
+
+
+
 void UART1Init(long baud_rate){
 RCSTA1bits.SPEN = 1;
 TRISCbits.TRISC7 = 1;
@@ -36631,7 +36615,7 @@ if(ch>13) return 0;
 
 ADCON0=(ch<<2);
 ADCON0bits.ADON=1;
-_delay((unsigned long)((5)*(4000000/4000000.0)));
+_delay((unsigned long)((15)*(4000000/4000000.0)));
 ADCON0bits.GODONE=1;
 while(ADCON0bits.GODONE);
 ADCON0bits.ADON=0;
@@ -36665,52 +36649,102 @@ ADCON0bits.ADON = 1;
 }
 void do_voltage(void)
 {
-if (heartbeatCountTwo < 255)
-{
-heartbeatCountTwo++;
-}
-else
-{
-heartbeatCountTwo = 0;
+
 ADCValue=ADCRead(0);
 
 volts = 5.7 * ((float)ADCValue)/1024.0;
 printf("Voltage V%6.2f\r\n", volts);
 
-}
+
 
 }
+char UART1RxByte(void)
+{
+int timeout = 0;
+
+while (!PIR1bits.RC1IF && timeout < 20000)
+timeout++;
+
+
+if (timeout == 20000)
+return -1;
+return RCREG1;
+
+}
+void Heartbeat(void)
+{
+
+if (heartbeatCount < 225)
+{
+heartbeatCount++;
+
+PORTBbits.RB4 ^= 1;
+PORTBbits.RB5 ^= 1;
+}
+else
+{
+heartbeatCount = 0;
+
+
+
+PORTBbits.RB6 ^= 1;
+PORTBbits.RB7 ^= 1;
+_delay((unsigned long)((10)*(4000000/4000.0)));
+
+
+}
+}
+
 void main(void) {
 setup();
 unsigned int vale=0;
 unsigned int stats;
 volatile float voltage;
+volatile char AT_COMMAND;
 
 config_adc();
 
 UART1Init(38400);
-puts1USART((char *)Txdata);
+puts1USART((char *)device_name);
 while (1) {
+Heartbeat();
 while (PIR1bits.TX1IF == 0);
 
 
 
+
+if (RC1IF==1)
+{
+
+
+AT_COMMAND=RCREG;
+
+
+
+puts1USART(itoa(stringval,AT_COMMAND,10));
+
+printf(" %c\n\r", AT_COMMAND);
+
+
+
+if (AT_COMMAND=='v')
+{
 do_voltage();
+AT_COMMAND=0;
+printf("stage2\n\r");
+}
+if (AT_COMMAND=='c')
+{
 
 
+puts1USART( itoa(stringval,heartbeatCount,10));
+printf("\n\r");
+}
+}
 
-
-Heartbeat();
-
-# 266
+# 334
 }
 
 
 return;
 }
-void putch(char data) {
-while (!TXIF)
-continue;
-TXREG = data;
-}
-

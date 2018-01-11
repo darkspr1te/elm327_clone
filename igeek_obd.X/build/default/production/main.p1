@@ -7,17 +7,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ANCON1 `Vuc ~T0 @X0 0 e@3932 ]
 "26858
 [v _WPUB `Vuc ~T0 @X0 0 e@3931 ]
-"29942
-[s S1134 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1134 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
-"29952
-[s S1135 :3 `uc 1 :1 `uc 1 ]
-[n S1135 . . CCP2_PA2 ]
-"29941
-[u S1133 `S1134 1 `S1135 1 ]
-[n S1133 . . . ]
-"29957
-[v _PORTBbits `VS1133 ~T0 @X0 0 e@3969 ]
+"29936
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"42658
+[v _TXIF `Vb ~T0 @X0 0 e@31988 ]
+"32771
+[v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
 "32151
 [s S1231 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S1231 . RX9D OERR FERR ADDEN CREN SREN RX9 SPEN ]
@@ -191,9 +186,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ADCON2bits `VS1333 ~T0 @X0 0 e@4032 ]
 "195 /opt/microchip/xc8/v1.42/include/stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-[p mainexit ]
-"247 ../../../../opt/microchip/xc8/v1.42/include/plib/usart.h
-[v _puts1USART `(v ~T0 @X0 0 ef1`*uc ]
 "31146 /opt/microchip/xc8/v1.42/include/pic18f25k80.h
 [s S1183 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S1183 . TMR1IF TMR2IF TMR1GIF SSPIF TX1IF RC1IF ADIF ]
@@ -205,10 +197,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S1182 . . . ]
 "31161
 [v _PIR1bits `VS1182 ~T0 @X0 0 e@3998 ]
-"42658
-[v _TXIF `Vb ~T0 @X0 0 e@31988 ]
-"32771
-[v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
+"32804
+[v _RCREG1 `Vuc ~T0 @X0 0 e@4014 ]
+"29942
+[s S1134 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1134 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
+"29952
+[s S1135 :3 `uc 1 :1 `uc 1 ]
+[n S1135 . . CCP2_PA2 ]
+"29941
+[u S1133 `S1134 1 `S1135 1 ]
+[n S1133 . . . ]
+"29957
+[v _PORTBbits `VS1133 ~T0 @X0 0 e@3969 ]
+[p mainexit ]
+"247 ../../../../opt/microchip/xc8/v1.42/include/plib/usart.h
+[v _puts1USART `(v ~T0 @X0 0 ef1`*uc ]
+"39864 /opt/microchip/xc8/v1.42/include/pic18f25k80.h
+[v _RC1IF `Vb ~T0 @X0 0 e@31989 ]
+"32809
+[v _RCREG `Vuc ~T0 @X0 0 e@4014 ]
+"95 /opt/microchip/xc8/v1.42/include/stdlib.h
+[v _itoa `(*uc ~T0 @X0 0 ef3`*uc`i`i ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -27832,8 +27842,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x SOSCSEL=DIG ]
 "16
 [p x XINST=OFF ]
-"20
-[p x FOSC=XT ]
+"19
+[p x FOSC=HS1 ]
 "21
 [p x PLLCFG=OFF ]
 "22
@@ -27977,20 +27987,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdlib.h: 101: extern char * ltoa(char * buf, long val, int base);
 [; ;stdlib.h: 102: extern char * ultoa(char * buf, unsigned long val, int base);
 [; ;stdlib.h: 104: extern char * ftoa(float f, int * status);
-[; ;main.c: 70: void Delay(unsigned int count);
-[; ;main.c: 71: void Heartbeat(void);
-"73 main.c
-[v _heartbeatCount `i ~T0 @X0 1 e ]
-[; ;main.c: 73: int heartbeatCount;
-"74
-[v _heartbeatCountTwo `i ~T0 @X0 1 e ]
-[; ;main.c: 74: int heartbeatCountTwo;
-"75
-[v _Txdata `uc ~T0 @X0 -> 0 `x e ]
-[i _Txdata
+[; ;main.c: 81: void Delay(unsigned int count);
+[; ;main.c: 82: void Heartbeat(void);
+"84 main.c
+[v _heartbeatCount `Vi ~T0 @X0 1 e ]
+[; ;main.c: 84: volatile int heartbeatCount;
+"86
+[v _device_name `uc ~T0 @X0 -> 0 `x e ]
+[i _device_name
 :U ..
--> 13 `c
 -> 10 `c
+-> 13 `c
 -> 105 `c
 -> 71 `c
 -> 101 `c
@@ -28036,12 +28043,41 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 97 `c
 -> 114 `c
 -> 101 `c
--> 32 `c
+-> 13 `c
+-> 10 `c
 -> 0 `c
 ..
 ]
-[; ;main.c: 75: unsigned char Txdata[] = "\r\niGeek ODB2 Open Sourced ELM327 Clone firmware ";
-"76
+[; ;main.c: 86: unsigned char device_name[] = "\n\riGeek ODB2 Open Sourced ELM327 Clone firmware\r\n";
+"87
+[v _device_name_two `uc ~T0 @X0 -> 0 `x e ]
+[i _device_name_two
+:U ..
+-> 13 `c
+-> 10 `c
+-> 84 `c
+-> 101 `c
+-> 115 `c
+-> 116 `c
+-> 32 `c
+-> 83 `c
+-> 116 `c
+-> 97 `c
+-> 116 `c
+-> 101 `c
+-> 109 `c
+-> 101 `c
+-> 110 `c
+-> 116 `c
+-> 32 `c
+-> 84 `c
+-> 119 `c
+-> 111 `c
+-> 0 `c
+..
+]
+[; ;main.c: 87: unsigned char device_name_two[] = "\r\nTest Statement Two";
+"88
 [v _Newline `uc ~T0 @X0 -> 0 `x e ]
 [i _Newline
 :U ..
@@ -28050,8 +28086,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-[; ;main.c: 76: unsigned char Newline[] = "\n\r";
-"77
+[; ;main.c: 88: unsigned char Newline[] = "\n\r";
+"89
 [v _spacing `uc ~T0 @X0 -> 0 `x e ]
 [i _spacing
 :U ..
@@ -28061,8 +28097,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-[; ;main.c: 77: unsigned char spacing[] = "   ";
-"78
+[; ;main.c: 89: unsigned char spacing[] = "   ";
+"90
 [v _inttext `uc ~T0 @X0 -> 0 `x e ]
 [i _inttext
 :U ..
@@ -28071,551 +28107,606 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 32 `c
 -> 73 `c
 -> 78 `c
+-> 78 `c
 -> 84 `c
 -> 32 `c
 -> 0 `c
 ..
 ]
-[; ;main.c: 78: unsigned char inttext[] = "   INT ";
-"79
+[; ;main.c: 90: unsigned char inttext[] = "   INNT ";
+"91
 [v _newvals `uc ~T0 @X0 -> 0 `x e ]
 [i _newvals
 :U ..
 -> 0 `c
 ..
 ]
-[; ;main.c: 79: unsigned char newvals[] = "";
-"80
+[; ;main.c: 91: unsigned char newvals[] = "";
+"92
 [v _volts `f ~T0 @X0 1 e ]
-[; ;main.c: 80: float volts;
-"81
+[; ;main.c: 92: float volts;
+"93
 [v _ADCValue `ui ~T0 @X0 1 e ]
 [i _ADCValue
 -> -> 0 `i `ui
 ]
-[; ;main.c: 81: unsigned int ADCValue = 0;
-"82
+[; ;main.c: 93: unsigned int ADCValue = 0;
+"94
 [v _ADCStringVal `uc ~T0 @X0 -> 4 `i e ]
-[; ;main.c: 82: unsigned char ADCStringVal[4];
-"83
+[; ;main.c: 94: unsigned char ADCStringVal[4];
+"95
 [v _ADCStringValTwo `uc ~T0 @X0 -> 4 `i e ]
-[; ;main.c: 83: unsigned char ADCStringValTwo[4];
-"86
+[; ;main.c: 95: unsigned char ADCStringValTwo[4];
+"96
+[v _stringval `uc ~T0 @X0 -> 10 `i e ]
+[; ;main.c: 96: unsigned char stringval[10];
+"99
 [v _setup `(v ~T0 @X0 1 ef ]
-"87
+"100
 {
-[; ;main.c: 86: void setup (void)
-[; ;main.c: 87: {
+[; ;main.c: 99: void setup (void)
+[; ;main.c: 100: {
 [e :U _setup ]
 [f ]
-[; ;main.c: 88: TRISB = 0b00000000;
-"88
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;main.c: 89: TRISC = 0;
-"89
-[e = _TRISC -> -> 0 `i `uc ]
-[; ;main.c: 91: ANCON1 = 0;
-"91
-[e = _ANCON1 -> -> 0 `i `uc ]
-[; ;main.c: 92: WPUB = 0b00000000;
-"92
-[e = _WPUB -> -> 0 `i `uc ]
-[; ;main.c: 96: PORTBbits.RB0 = 1;
-"96
-[e = . . _PORTBbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 97: PORTBbits.RB1 = 1;
-"97
-[e = . . _PORTBbits 0 1 -> -> 1 `i `uc ]
-[; ;main.c: 98: PORTBbits.RB2 = 1;
-"98
-[e = . . _PORTBbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 99: PORTBbits.RB3 = 1;
-"99
-[e = . . _PORTBbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 100: PORTBbits.RB4 = 1;
-"100
-[e = . . _PORTBbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 101: PORTBbits.RB5 = 1;
+[; ;main.c: 101: TRISB = 0b00000000;
 "101
-[e = . . _PORTBbits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 102: PORTBbits.RB6 = 1;
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;main.c: 102: TRISC = 0;
 "102
-[e = . . _PORTBbits 0 6 -> -> 1 `i `uc ]
-[; ;main.c: 103: PORTBbits.RB7 = 1;
-"103
-[e = . . _PORTBbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 105: }
+[e = _TRISC -> -> 0 `i `uc ]
+[; ;main.c: 104: ANCON1 = 0;
+"104
+[e = _ANCON1 -> -> 0 `i `uc ]
+[; ;main.c: 105: WPUB = 0b00000000;
 "105
+[e = _WPUB -> -> 0 `i `uc ]
+[; ;main.c: 108: PORTB=0b1111111;
+"108
+[e = _PORTB -> -> 127 `i `uc ]
+[; ;main.c: 118: }
+"118
 [e :UE 3099 ]
 }
-"106
+"119
 [v _Delay `(v ~T0 @X0 1 ef1`ui ]
-"107
+"120
 {
-[; ;main.c: 106: void Delay(unsigned int count)
-[; ;main.c: 107: {
+[; ;main.c: 119: void Delay(unsigned int count)
+[; ;main.c: 120: {
 [e :U _Delay ]
-"106
+"119
 [v _count `ui ~T0 @X0 1 r1 ]
-"107
+"120
 [f ]
-[; ;main.c: 109: while(count--);
-"109
+[; ;main.c: 122: while(count--);
+"122
 [e $U 3101  ]
 [e :U 3102 ]
 [e :U 3101 ]
 [e $ != -- _count -> -> 1 `i `ui -> -> 0 `i `ui 3102  ]
 [e :U 3103 ]
-[; ;main.c: 110: }
-"110
+[; ;main.c: 123: }
+"123
 [e :UE 3100 ]
 }
-"112
-[v _Heartbeat `(v ~T0 @X0 1 ef ]
-"113
-{
-[; ;main.c: 112: void Heartbeat(void)
-[; ;main.c: 113: {
-[e :U _Heartbeat ]
-[f ]
-[; ;main.c: 115: if (heartbeatCount < 255)
-"115
-[e $ ! < _heartbeatCount -> 255 `i 3105  ]
-[; ;main.c: 116: {
-"116
-{
-[; ;main.c: 117: heartbeatCount++;
-"117
-[e ++ _heartbeatCount -> 1 `i ]
-"118
-}
-[; ;main.c: 118: }
-[e $U 3106  ]
-"119
-[e :U 3105 ]
-[; ;main.c: 119: else
-[; ;main.c: 120: {
-"120
-{
-[; ;main.c: 121: heartbeatCount = 0;
-"121
-[e = _heartbeatCount -> 0 `i ]
-[; ;main.c: 122: PORTBbits.RB4 ^= 1;
-"122
-[e =^ . . _PORTBbits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 123: PORTBbits.RB5 ^= 1;
-"123
-[e =^ . . _PORTBbits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 125: PORTBbits.RB6 ^= 1;
-"125
-[e =^ . . _PORTBbits 0 6 -> -> 1 `i `uc ]
-[; ;main.c: 126: PORTBbits.RB7 ^= 1;
-"126
-[e =^ . . _PORTBbits 0 7 -> -> 1 `i `uc ]
+"128
+[v _returnString `(*uc ~T0 @X0 1 ef1`uc ]
 "129
+{
+[; ;main.c: 128: unsigned char* returnString(unsigned char inputValue)
+[; ;main.c: 129: {
+[e :U _returnString ]
+"128
+[v _inputValue `uc ~T0 @X0 1 r1 ]
+"129
+[f ]
+"130
+[v F26791 `uc ~T0 @X0 -> 4 `i s processedString ]
+"131
+[v _firstDigitCounter `uc ~T0 @X0 1 a ]
+[; ;main.c: 130: static unsigned char processedString[4];
+[; ;main.c: 131: unsigned char firstDigitCounter = 0;
+[e = _firstDigitCounter -> -> 0 `i `uc ]
+"132
+[v _secondDigitCounter `uc ~T0 @X0 1 a ]
+[; ;main.c: 132: unsigned char secondDigitCounter = 0;
+[e = _secondDigitCounter -> -> 0 `i `uc ]
+[; ;main.c: 133: if (inputValue > 99)
+"133
+[e $ ! > -> _inputValue `i -> 99 `i 3105  ]
+[; ;main.c: 134: {
+"134
+{
+[; ;main.c: 135: while (inputValue > 99)
+"135
+[e $U 3106  ]
+[e :U 3107 ]
+[; ;main.c: 136: {
+"136
+{
+[; ;main.c: 137: inputValue -= 100;
+"137
+[e =- _inputValue -> -> 100 `i `uc ]
+[; ;main.c: 138: firstDigitCounter++;
+"138
+[e ++ _firstDigitCounter -> -> 1 `i `uc ]
+"139
 }
 [e :U 3106 ]
-[; ;main.c: 129: }
-[; ;main.c: 130: }
-"130
-[e :UE 3104 ]
-}
-"134
-[v _returnString `(*uc ~T0 @X0 1 ef1`uc ]
 "135
-{
-[; ;main.c: 134: unsigned char* returnString(unsigned char inputValue)
-[; ;main.c: 135: {
-[e :U _returnString ]
-"134
-[v _inputValue `uc ~T0 @X0 1 r1 ]
-"135
-[f ]
-"136
-[v F26791 `uc ~T0 @X0 -> 4 `i s processedString ]
-"137
-[v _firstDigitCounter `uc ~T0 @X0 1 a ]
-[; ;main.c: 136: static unsigned char processedString[4];
-[; ;main.c: 137: unsigned char firstDigitCounter = 0;
-[e = _firstDigitCounter -> -> 0 `i `uc ]
-"138
-[v _secondDigitCounter `uc ~T0 @X0 1 a ]
-[; ;main.c: 138: unsigned char secondDigitCounter = 0;
-[e = _secondDigitCounter -> -> 0 `i `uc ]
-[; ;main.c: 139: if (inputValue > 99)
-"139
-[e $ ! > -> _inputValue `i -> 99 `i 3108  ]
-[; ;main.c: 140: {
+[e $ > -> _inputValue `i -> 99 `i 3107  ]
+[e :U 3108 ]
+[; ;main.c: 139: }
+[; ;main.c: 140: while (inputValue > 9)
 "140
-{
-[; ;main.c: 141: while (inputValue > 99)
-"141
 [e $U 3109  ]
 [e :U 3110 ]
-[; ;main.c: 142: {
-"142
+[; ;main.c: 141: {
+"141
 {
-[; ;main.c: 143: inputValue -= 100;
+[; ;main.c: 142: inputValue -= 10;
+"142
+[e =- _inputValue -> -> 10 `i `uc ]
+[; ;main.c: 143: secondDigitCounter++;
 "143
-[e =- _inputValue -> -> 100 `i `uc ]
-[; ;main.c: 144: firstDigitCounter++;
+[e ++ _secondDigitCounter -> -> 1 `i `uc ]
 "144
-[e ++ _firstDigitCounter -> -> 1 `i `uc ]
-"145
 }
 [e :U 3109 ]
-"141
-[e $ > -> _inputValue `i -> 99 `i 3110  ]
+"140
+[e $ > -> _inputValue `i -> 9 `i 3110  ]
 [e :U 3111 ]
-[; ;main.c: 145: }
-[; ;main.c: 146: while (inputValue > 9)
-"146
-[e $U 3112  ]
-[e :U 3113 ]
-[; ;main.c: 147: {
-"147
-{
-[; ;main.c: 148: inputValue -= 10;
+[; ;main.c: 144: }
+[; ;main.c: 148: processedString[0] = firstDigitCounter + 0x30;
 "148
-[e =- _inputValue -> -> 10 `i `uc ]
-[; ;main.c: 149: secondDigitCounter++;
+[e = *U + &U F26791 * -> -> -> 0 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _firstDigitCounter `i -> 48 `i `uc ]
+[; ;main.c: 149: processedString[1] = secondDigitCounter + 0x30;
 "149
-[e ++ _secondDigitCounter -> -> 1 `i `uc ]
+[e = *U + &U F26791 * -> -> -> 1 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _secondDigitCounter `i -> 48 `i `uc ]
+[; ;main.c: 150: processedString[2] = inputValue + 0x30;
 "150
+[e = *U + &U F26791 * -> -> -> 2 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _inputValue `i -> 48 `i `uc ]
+[; ;main.c: 151: processedString[3] = '\0';
+"151
+[e = *U + &U F26791 * -> -> -> 3 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> -> 0 `ui `uc ]
+"152
+}
+[; ;main.c: 152: }
+[e $U 3112  ]
+"153
+[e :U 3105 ]
+[; ;main.c: 153: else
+[; ;main.c: 154: {
+"154
+{
+[; ;main.c: 155: while (inputValue > 9)
+"155
+[e $U 3113  ]
+[e :U 3114 ]
+[; ;main.c: 156: {
+"156
+{
+[; ;main.c: 157: inputValue -= 10;
+"157
+[e =- _inputValue -> -> 10 `i `uc ]
+[; ;main.c: 158: secondDigitCounter++;
+"158
+[e ++ _secondDigitCounter -> -> 1 `i `uc ]
+"159
+}
+[e :U 3113 ]
+"155
+[e $ > -> _inputValue `i -> 9 `i 3114  ]
+[e :U 3115 ]
+[; ;main.c: 159: }
+[; ;main.c: 160: processedString[0] = secondDigitCounter + 0x30;
+"160
+[e = *U + &U F26791 * -> -> -> 0 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _secondDigitCounter `i -> 48 `i `uc ]
+[; ;main.c: 161: processedString[1] = inputValue + 0x30;
+"161
+[e = *U + &U F26791 * -> -> -> 1 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _inputValue `i -> 48 `i `uc ]
+[; ;main.c: 162: processedString[2] = '\0';
+"162
+[e = *U + &U F26791 * -> -> -> 2 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> -> 0 `ui `uc ]
+"163
 }
 [e :U 3112 ]
-"146
-[e $ > -> _inputValue `i -> 9 `i 3113  ]
-[e :U 3114 ]
-[; ;main.c: 150: }
-[; ;main.c: 154: processedString[0] = firstDigitCounter + 0x30;
-"154
-[e = *U + &U F26791 * -> -> -> 0 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _firstDigitCounter `i -> 48 `i `uc ]
-[; ;main.c: 155: processedString[1] = secondDigitCounter + 0x30;
-"155
-[e = *U + &U F26791 * -> -> -> 1 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _secondDigitCounter `i -> 48 `i `uc ]
-[; ;main.c: 156: processedString[2] = inputValue + 0x30;
-"156
-[e = *U + &U F26791 * -> -> -> 2 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _inputValue `i -> 48 `i `uc ]
-[; ;main.c: 157: processedString[3] = '\0';
-"157
-[e = *U + &U F26791 * -> -> -> 3 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> -> 0 `ui `uc ]
-"158
-}
-[; ;main.c: 158: }
-[e $U 3115  ]
-"159
-[e :U 3108 ]
-[; ;main.c: 159: else
-[; ;main.c: 160: {
-"160
-{
-[; ;main.c: 161: while (inputValue > 9)
-"161
-[e $U 3116  ]
-[e :U 3117 ]
-[; ;main.c: 162: {
-"162
-{
-[; ;main.c: 163: inputValue -= 10;
-"163
-[e =- _inputValue -> -> 10 `i `uc ]
-[; ;main.c: 164: secondDigitCounter++;
+[; ;main.c: 163: }
+[; ;main.c: 164: return processedString;
 "164
-[e ++ _secondDigitCounter -> -> 1 `i `uc ]
-"165
-}
-[e :U 3116 ]
-"161
-[e $ > -> _inputValue `i -> 9 `i 3117  ]
-[e :U 3118 ]
-[; ;main.c: 165: }
-[; ;main.c: 166: processedString[0] = secondDigitCounter + 0x30;
-"166
-[e = *U + &U F26791 * -> -> -> 0 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _secondDigitCounter `i -> 48 `i `uc ]
-[; ;main.c: 167: processedString[1] = inputValue + 0x30;
-"167
-[e = *U + &U F26791 * -> -> -> 1 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> + -> _inputValue `i -> 48 `i `uc ]
-[; ;main.c: 168: processedString[2] = '\0';
-"168
-[e = *U + &U F26791 * -> -> -> 2 `i `ui `ux -> -> # *U &U F26791 `ui `ux -> -> 0 `ui `uc ]
-"169
-}
-[e :U 3115 ]
-[; ;main.c: 169: }
-[; ;main.c: 170: return processedString;
-"170
 [e ) &U F26791 ]
-[e $UE 3107  ]
-[; ;main.c: 171: }
-"171
-[e :UE 3107 ]
+[e $UE 3104  ]
+[; ;main.c: 165: }
+"165
+[e :UE 3104 ]
 }
-"172
-[v _UART1Init `(v ~T0 @X0 1 ef1`l ]
-{
-[; ;main.c: 172: void UART1Init(long baud_rate){
-[e :U _UART1Init ]
-[v _baud_rate `l ~T0 @X0 1 r1 ]
-[f ]
-[; ;main.c: 173: RCSTA1bits.SPEN = 1;
-"173
-[e = . . _RCSTA1bits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 174: TRISCbits.TRISC7 = 1;
-"174
-[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 175: RCSTA1bits.CREN = 1;
-"175
-[e = . . _RCSTA1bits 0 4 -> -> 1 `i `uc ]
-[; ;main.c: 176: TRISCbits.TRISC6 = 0;
-"176
-[e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
-[; ;main.c: 177: TXSTA1bits.TXEN = 1;
-"177
-[e = . . _TXSTA1bits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 178: TXSTA1bits.SYNC = 0;
-"178
-[e = . . _TXSTA1bits 0 4 -> -> 0 `i `uc ]
-[; ;main.c: 179: TXSTA1bits.BRGH = 1;
-"179
-[e = . . _TXSTA1bits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 180: BAUDCON1bits.BRG16 = 1;
-"180
-[e = . . _BAUDCON1bits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 181: SPBRG1 = (4000000/baud_rate/4)-1;
-"181
-[e = _SPBRG1 -> - / / -> 4000000 `l _baud_rate -> -> 4 `i `l -> -> 1 `i `l `uc ]
-[; ;main.c: 182: return;
-"182
-[e $UE 3119  ]
-[; ;main.c: 183: }
-"183
-[e :UE 3119 ]
-}
-"185
-[v _ADCRead `(ui ~T0 @X0 1 ef1`uc ]
-"186
-{
-[; ;main.c: 185: unsigned int ADCRead(unsigned char ch)
-[; ;main.c: 186: {
-[e :U _ADCRead ]
-"185
-[v _ch `uc ~T0 @X0 1 r1 ]
-"186
-[f ]
-[; ;main.c: 187: if(ch>13) return 0;
-"187
-[e $ ! > -> _ch `i -> 13 `i 3121  ]
-[e ) -> -> 0 `i `ui ]
-[e $UE 3120  ]
-[e :U 3121 ]
-[; ;main.c: 189: ADCON0=(ch<<2);
-"189
-[e = _ADCON0 -> << -> _ch `i -> 2 `i `uc ]
-[; ;main.c: 190: ADCON0bits.ADON=1;
-"190
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 191: _delay((unsigned long)((5)*(4000000/4000000.0)));
-"191
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
-[; ;main.c: 192: ADCON0bits.GODONE=1;
-"192
-[e = . . _ADCON0bits 6 1 -> -> 1 `i `uc ]
-[; ;main.c: 193: while(ADCON0bits.GODONE);
-"193
-[e $U 3122  ]
-[e :U 3123 ]
-[e :U 3122 ]
-[e $ != -> . . _ADCON0bits 6 1 `i -> -> -> 0 `i `Vuc `i 3123  ]
-[e :U 3124 ]
-[; ;main.c: 194: ADCON0bits.ADON=0;
-"194
-[e = . . _ADCON0bits 1 0 -> -> 0 `i `uc ]
-[; ;main.c: 197: return ADRES;
-"197
-[e ) -> _ADRES `ui ]
-[e $UE 3120  ]
-[; ;main.c: 199: }
-"199
-[e :UE 3120 ]
-}
-"203
-[v _config_adc `(v ~T0 @X0 1 ef ]
-"204
-{
-[; ;main.c: 203: void config_adc(void)
-[; ;main.c: 204: {
-[e :U _config_adc ]
-[f ]
-[; ;main.c: 205: ANCON0bits.ANSEL0 = 1;
-"205
-[e = . . _ANCON0bits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 206: TRISAbits.TRISA0 = 1;
-"206
-[e = . . _TRISAbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 207: PORTAbits.RA0 = 0;
-"207
-[e = . . _PORTAbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 209: ADCON1bits.TRIGSEL =0b00;
-"209
-[e = . . _ADCON1bits 0 3 -> -> 0 `i `uc ]
-[; ;main.c: 210: ADCON1bits.VCFG = 0b11;
-"210
-[e = . . _ADCON1bits 0 2 -> -> 3 `i `uc ]
-[; ;main.c: 211: ADCON1bits.VNCFG =0b0;
-"211
-[e = . . _ADCON1bits 0 1 -> -> 0 `i `uc ]
-[; ;main.c: 212: ADCON1bits.CHSN =0b000;
-"212
-[e = . . _ADCON1bits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 215: ADCON2bits.ADFM = 0b1;
-"215
-[e = . . _ADCON2bits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 216: ADCON2bits.ACQT = 0b001;
-"216
-[e = . . _ADCON2bits 0 1 -> -> 1 `i `uc ]
-[; ;main.c: 217: ADCON2bits.ADCS = 0b100;
-"217
-[e = . . _ADCON2bits 0 0 -> -> 4 `i `uc ]
-[; ;main.c: 220: ADCON0bits.ADON = 1;
-"220
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 222: }
-"222
-[e :UE 3125 ]
-}
-"223
-[v _do_voltage `(v ~T0 @X0 1 ef ]
-"224
-{
-[; ;main.c: 223: void do_voltage(void)
-[; ;main.c: 224: {
-[e :U _do_voltage ]
-[f ]
-[; ;main.c: 225: if (heartbeatCountTwo < 255)
-"225
-[e $ ! < _heartbeatCountTwo -> 255 `i 3127  ]
-[; ;main.c: 226: {
-"226
-{
-[; ;main.c: 227: heartbeatCountTwo++;
-"227
-[e ++ _heartbeatCountTwo -> 1 `i ]
-"228
-}
-[; ;main.c: 228: }
-[e $U 3128  ]
-"229
-[e :U 3127 ]
-[; ;main.c: 229: else
-[; ;main.c: 230: {
-"230
-{
-[; ;main.c: 231: heartbeatCountTwo = 0;
-"231
-[e = _heartbeatCountTwo -> 0 `i ]
-[; ;main.c: 232: ADCValue=ADCRead(0);
-"232
-[e = _ADCValue ( _ADCRead (1 -> -> 0 `i `uc ]
-[; ;main.c: 234: volts = 5.7 * ((float)ADCValue)/1024.0;
-"234
-[e = _volts -> / * .5.7 -> -> _ADCValue `f `d .1024.0 `f ]
-[; ;main.c: 235: printf("Voltage V%6.2f\r\n", volts);
-"235
-[e ( _printf , (. :s 1C -> _volts `d ]
-"237
-}
-[e :U 3128 ]
-[; ;main.c: 237: }
-[; ;main.c: 239: }
-"239
-[e :UE 3126 ]
-}
-[v $root$_main `(v ~T0 @X0 0 e ]
-"240
-[v _main `(v ~T0 @X0 1 ef ]
-{
-[; ;main.c: 240: void main(void) {
-[e :U _main ]
-[f ]
-[; ;main.c: 241: setup();
-"241
-[e ( _setup ..  ]
-"242
-[v _vale `ui ~T0 @X0 1 a ]
-[; ;main.c: 242: unsigned int vale=0;
-[e = _vale -> -> 0 `i `ui ]
-"243
-[v _stats `ui ~T0 @X0 1 a ]
-"244
-[v _voltage `Vf ~T0 @X0 1 a ]
-[; ;main.c: 243: unsigned int stats;
-[; ;main.c: 244: volatile float voltage;
-[; ;main.c: 246: config_adc();
-"246
-[e ( _config_adc ..  ]
-[; ;main.c: 248: UART1Init(38400);
-"248
-[e ( _UART1Init (1 -> 38400 `l ]
-[; ;main.c: 249: puts1USART((char *)Txdata);
-"249
-[e ( _puts1USART (1 &U _Txdata ]
-[; ;main.c: 250: while (1) {
-"250
-[e :U 3131 ]
-{
-[; ;main.c: 251: while (PIR1bits.TX1IF == 0);
-"251
-[e $U 3133  ]
-[e :U 3134 ]
-[e :U 3133 ]
-[e $ == -> . . _PIR1bits 0 4 `i -> 0 `i 3134  ]
-[e :U 3135 ]
-[; ;main.c: 255: do_voltage();
-"255
-[e ( _do_voltage ..  ]
-[; ;main.c: 260: Heartbeat();
-"260
-[e ( _Heartbeat ..  ]
-"266
-}
-[e :U 3130 ]
-"250
-[e $U 3131  ]
-[e :U 3132 ]
-[; ;main.c: 266: }
-[; ;main.c: 269: return;
-"269
-[e $UE 3129  ]
-[; ;main.c: 270: }
-"270
-[e :UE 3129 ]
-}
-"271
+"166
 [v _putch `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 271: void putch(char data) {
+[; ;main.c: 166: void putch(char data) {
 [e :U _putch ]
 [v _data `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 272: while (!TXIF)
-"272
-[e $U 3137  ]
-[e :U 3138 ]
-[; ;main.c: 273: continue;
-"273
-[e $U 3137  ]
-[e :U 3137 ]
-"272
-[e $ ! _TXIF 3138  ]
-[e :U 3139 ]
-[; ;main.c: 274: TXREG = data;
-"274
+[; ;main.c: 167: while (!TXIF)
+"167
+[e $U 3117  ]
+[e :U 3118 ]
+[; ;main.c: 168: continue;
+"168
+[e $U 3117  ]
+[e :U 3117 ]
+"167
+[e $ ! _TXIF 3118  ]
+[e :U 3119 ]
+[; ;main.c: 169: TXREG = data;
+"169
 [e = _TXREG _data ]
-[; ;main.c: 275: }
+[; ;main.c: 170: }
+"170
+[e :UE 3116 ]
+}
+"174
+[v _UART1Init `(v ~T0 @X0 1 ef1`l ]
+{
+[; ;main.c: 174: void UART1Init(long baud_rate){
+[e :U _UART1Init ]
+[v _baud_rate `l ~T0 @X0 1 r1 ]
+[f ]
+[; ;main.c: 175: RCSTA1bits.SPEN = 1;
+"175
+[e = . . _RCSTA1bits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 176: TRISCbits.TRISC7 = 1;
+"176
+[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 177: RCSTA1bits.CREN = 1;
+"177
+[e = . . _RCSTA1bits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 178: TRISCbits.TRISC6 = 0;
+"178
+[e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
+[; ;main.c: 179: TXSTA1bits.TXEN = 1;
+"179
+[e = . . _TXSTA1bits 0 5 -> -> 1 `i `uc ]
+[; ;main.c: 180: TXSTA1bits.SYNC = 0;
+"180
+[e = . . _TXSTA1bits 0 4 -> -> 0 `i `uc ]
+[; ;main.c: 181: TXSTA1bits.BRGH = 1;
+"181
+[e = . . _TXSTA1bits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 182: BAUDCON1bits.BRG16 = 1;
+"182
+[e = . . _BAUDCON1bits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 183: SPBRG1 = (4000000/baud_rate/4)-1;
+"183
+[e = _SPBRG1 -> - / / -> 4000000 `l _baud_rate -> -> 4 `i `l -> -> 1 `i `l `uc ]
+[; ;main.c: 184: return;
+"184
+[e $UE 3120  ]
+[; ;main.c: 185: }
+"185
+[e :UE 3120 ]
+}
+"187
+[v _ADCRead `(ui ~T0 @X0 1 ef1`uc ]
+"188
+{
+[; ;main.c: 187: unsigned int ADCRead(unsigned char ch)
+[; ;main.c: 188: {
+[e :U _ADCRead ]
+"187
+[v _ch `uc ~T0 @X0 1 r1 ]
+"188
+[f ]
+[; ;main.c: 189: if(ch>13) return 0;
+"189
+[e $ ! > -> _ch `i -> 13 `i 3122  ]
+[e ) -> -> 0 `i `ui ]
+[e $UE 3121  ]
+[e :U 3122 ]
+[; ;main.c: 191: ADCON0=(ch<<2);
+"191
+[e = _ADCON0 -> << -> _ch `i -> 2 `i `uc ]
+[; ;main.c: 192: ADCON0bits.ADON=1;
+"192
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 193: _delay((unsigned long)((15)*(4000000/4000000.0)));
+"193
+[e ( __delay (1 -> * -> -> 15 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+[; ;main.c: 194: ADCON0bits.GODONE=1;
+"194
+[e = . . _ADCON0bits 6 1 -> -> 1 `i `uc ]
+[; ;main.c: 195: while(ADCON0bits.GODONE);
+"195
+[e $U 3123  ]
+[e :U 3124 ]
+[e :U 3123 ]
+[e $ != -> . . _ADCON0bits 6 1 `i -> -> -> 0 `i `Vuc `i 3124  ]
+[e :U 3125 ]
+[; ;main.c: 196: ADCON0bits.ADON=0;
+"196
+[e = . . _ADCON0bits 1 0 -> -> 0 `i `uc ]
+[; ;main.c: 199: return ADRES;
+"199
+[e ) -> _ADRES `ui ]
+[e $UE 3121  ]
+[; ;main.c: 201: }
+"201
+[e :UE 3121 ]
+}
+"205
+[v _config_adc `(v ~T0 @X0 1 ef ]
+"206
+{
+[; ;main.c: 205: void config_adc(void)
+[; ;main.c: 206: {
+[e :U _config_adc ]
+[f ]
+[; ;main.c: 207: ANCON0bits.ANSEL0 = 1;
+"207
+[e = . . _ANCON0bits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 208: TRISAbits.TRISA0 = 1;
+"208
+[e = . . _TRISAbits 0 0 -> -> 1 `i `uc ]
+[; ;main.c: 209: PORTAbits.RA0 = 0;
+"209
+[e = . . _PORTAbits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 211: ADCON1bits.TRIGSEL =0b00;
+"211
+[e = . . _ADCON1bits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 212: ADCON1bits.VCFG = 0b11;
+"212
+[e = . . _ADCON1bits 0 2 -> -> 3 `i `uc ]
+[; ;main.c: 213: ADCON1bits.VNCFG =0b0;
+"213
+[e = . . _ADCON1bits 0 1 -> -> 0 `i `uc ]
+[; ;main.c: 214: ADCON1bits.CHSN =0b000;
+"214
+[e = . . _ADCON1bits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 217: ADCON2bits.ADFM = 0b1;
+"217
+[e = . . _ADCON2bits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 218: ADCON2bits.ACQT = 0b001;
+"218
+[e = . . _ADCON2bits 0 1 -> -> 1 `i `uc ]
+[; ;main.c: 219: ADCON2bits.ADCS = 0b100;
+"219
+[e = . . _ADCON2bits 0 0 -> -> 4 `i `uc ]
+[; ;main.c: 222: ADCON0bits.ADON = 1;
+"222
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 224: }
+"224
+[e :UE 3126 ]
+}
+"225
+[v _do_voltage `(v ~T0 @X0 1 ef ]
+"226
+{
+[; ;main.c: 225: void do_voltage(void)
+[; ;main.c: 226: {
+[e :U _do_voltage ]
+[f ]
+[; ;main.c: 228: ADCValue=ADCRead(0);
+"228
+[e = _ADCValue ( _ADCRead (1 -> -> 0 `i `uc ]
+[; ;main.c: 230: volts = 5.7 * ((float)ADCValue)/1024.0;
+"230
+[e = _volts -> / * .5.7 -> -> _ADCValue `f `d .1024.0 `f ]
+[; ;main.c: 231: printf("Voltage V%6.2f\r\n", volts);
+"231
+[e ( _printf , (. :s 1C -> _volts `d ]
+[; ;main.c: 235: }
+"235
+[e :UE 3127 ]
+}
+"236
+[v _UART1RxByte `(uc ~T0 @X0 1 ef ]
+"237
+{
+[; ;main.c: 236: char UART1RxByte(void)
+[; ;main.c: 237: {
+[e :U _UART1RxByte ]
+[f ]
+"238
+[v _timeout `i ~T0 @X0 1 a ]
+[; ;main.c: 238: int timeout = 0;
+[e = _timeout -> 0 `i ]
+[; ;main.c: 240: while (!PIR1bits.RC1IF && timeout < 20000)
+"240
+[e $U 3129  ]
+[e :U 3130 ]
+[; ;main.c: 241: timeout++;
+"241
+[e ++ _timeout -> 1 `i ]
+[e :U 3129 ]
+"240
+[e $ && ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i < _timeout -> 20000 `i 3130  ]
+[e :U 3131 ]
+[; ;main.c: 244: if (timeout == 20000)
+"244
+[e $ ! == _timeout -> 20000 `i 3132  ]
+[; ;main.c: 245: return -1;
+"245
+[e ) -> -U -> 1 `i `uc ]
+[e $UE 3128  ]
+[e :U 3132 ]
+[; ;main.c: 246: return RCREG1;
+"246
+[e ) _RCREG1 ]
+[e $UE 3128  ]
+[; ;main.c: 248: }
+"248
+[e :UE 3128 ]
+}
+"249
+[v _Heartbeat `(v ~T0 @X0 1 ef ]
+"250
+{
+[; ;main.c: 249: void Heartbeat(void)
+[; ;main.c: 250: {
+[e :U _Heartbeat ]
+[f ]
+[; ;main.c: 252: if (heartbeatCount < 225)
+"252
+[e $ ! < _heartbeatCount -> 225 `i 3134  ]
+[; ;main.c: 253: {
+"253
+{
+[; ;main.c: 254: heartbeatCount++;
+"254
+[e ++ _heartbeatCount -> 1 `i ]
+[; ;main.c: 256: PORTBbits.RB4 ^= 1;
+"256
+[e =^ . . _PORTBbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 257: PORTBbits.RB5 ^= 1;
+"257
+[e =^ . . _PORTBbits 0 5 -> -> 1 `i `uc ]
+"258
+}
+[; ;main.c: 258: }
+[e $U 3135  ]
+"259
+[e :U 3134 ]
+[; ;main.c: 259: else
+[; ;main.c: 260: {
+"260
+{
+[; ;main.c: 261: heartbeatCount = 0;
+"261
+[e = _heartbeatCount -> 0 `i ]
+[; ;main.c: 265: PORTBbits.RB6 ^= 1;
+"265
+[e =^ . . _PORTBbits 0 6 -> -> 1 `i `uc ]
+[; ;main.c: 266: PORTBbits.RB7 ^= 1;
+"266
+[e =^ . . _PORTBbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 267: _delay((unsigned long)((10)*(4000000/4000.0)));
+"267
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+"270
+}
+[e :U 3135 ]
+[; ;main.c: 270: }
+[; ;main.c: 271: }
+"271
+[e :UE 3133 ]
+}
+[v $root$_main `(v ~T0 @X0 0 e ]
+"273
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[; ;main.c: 273: void main(void) {
+[e :U _main ]
+[f ]
+[; ;main.c: 274: setup();
+"274
+[e ( _setup ..  ]
 "275
+[v _vale `ui ~T0 @X0 1 a ]
+[; ;main.c: 275: unsigned int vale=0;
+[e = _vale -> -> 0 `i `ui ]
+"276
+[v _stats `ui ~T0 @X0 1 a ]
+"277
+[v _voltage `Vf ~T0 @X0 1 a ]
+"278
+[v _AT_COMMAND `Vuc ~T0 @X0 1 a ]
+[; ;main.c: 276: unsigned int stats;
+[; ;main.c: 277: volatile float voltage;
+[; ;main.c: 278: volatile char AT_COMMAND;
+[; ;main.c: 280: config_adc();
+"280
+[e ( _config_adc ..  ]
+[; ;main.c: 282: UART1Init(38400);
+"282
+[e ( _UART1Init (1 -> 38400 `l ]
+[; ;main.c: 283: puts1USART((char *)device_name);
+"283
+[e ( _puts1USART (1 &U _device_name ]
+[; ;main.c: 284: while (1) {
+"284
+[e :U 3138 ]
+{
+[; ;main.c: 285: Heartbeat();
+"285
+[e ( _Heartbeat ..  ]
+[; ;main.c: 286: while (PIR1bits.TX1IF == 0);
+"286
+[e $U 3140  ]
+[e :U 3141 ]
+[e :U 3140 ]
+[e $ == -> . . _PIR1bits 0 4 `i -> 0 `i 3141  ]
+[e :U 3142 ]
+[; ;main.c: 291: if (RC1IF==1)
+"291
+[e $ ! == -> _RC1IF `i -> 1 `i 3143  ]
+[; ;main.c: 292: {
+"292
+{
+[; ;main.c: 295: AT_COMMAND=RCREG;
+"295
+[e = _AT_COMMAND _RCREG ]
+[; ;main.c: 299: puts1USART(itoa(stringval,AT_COMMAND,10));
+"299
+[e ( _puts1USART (1 ( _itoa (3 , , &U _stringval -> _AT_COMMAND `i -> 10 `i ]
+[; ;main.c: 301: printf(" %c\n\r", AT_COMMAND);
+"301
+[e ( _printf , (. :s 2C -> _AT_COMMAND `i ]
+[; ;main.c: 305: if (AT_COMMAND=='v')
+"305
+[e $ ! == -> _AT_COMMAND `ui -> 118 `ui 3144  ]
+[; ;main.c: 306: {
+"306
+{
+[; ;main.c: 307: do_voltage();
+"307
+[e ( _do_voltage ..  ]
+[; ;main.c: 308: AT_COMMAND=0;
+"308
+[e = _AT_COMMAND -> -> 0 `i `uc ]
+[; ;main.c: 309: printf("stage2\n\r");
+"309
+[e ( _printf :s 3C ]
+"310
+}
+[e :U 3144 ]
+[; ;main.c: 310: }
+[; ;main.c: 311: if (AT_COMMAND=='c')
+"311
+[e $ ! == -> _AT_COMMAND `ui -> 99 `ui 3145  ]
+[; ;main.c: 312: {
+"312
+{
+[; ;main.c: 315: puts1USART( itoa(stringval,heartbeatCount,10));
+"315
+[e ( _puts1USART (1 ( _itoa (3 , , &U _stringval _heartbeatCount -> 10 `i ]
+[; ;main.c: 316: printf("\n\r");
+"316
+[e ( _printf :s 4C ]
+"317
+}
+[e :U 3145 ]
+"318
+}
+[e :U 3143 ]
+"334
+}
+[e :U 3137 ]
+"284
+[e $U 3138  ]
+[e :U 3139 ]
+[; ;main.c: 317: }
+[; ;main.c: 318: }
+[; ;main.c: 334: }
+[; ;main.c: 337: return;
+"337
+[e $UE 3136  ]
+[; ;main.c: 338: }
+"338
 [e :UE 3136 ]
 }
-[p f _printf 8495104 ]
+[p f _printf 9019392 ]
+[a 2C 32 37 99 10 13 0 ]
+[a 3C 115 116 97 103 101 50 10 13 0 ]
+[a 4C 10 13 0 ]
 [a 1C 86 111 108 116 97 103 101 32 86 37 54 46 50 102 13 10 0 ]
-

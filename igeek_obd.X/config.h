@@ -16,8 +16,8 @@
 #pragma config XINST = OFF       // Extended Instruction Set (Enabled)
 
 // CONFIG1H
-//#pragma config FOSC = HS1       // Oscillator (XT oscillator)
-#pragma config FOSC = XT       // Oscillator (XT oscillator)
+#pragma config FOSC = HS1       // Oscillator (XT oscillator)
+//#pragma config FOSC = XT       // Oscillator (XT oscillator)
 #pragma config PLLCFG = OFF     // PLL x4 Enable bit (Disabled)
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor (Disabled)
 #pragma config IESO = OFF       // Internal External Oscillator Switch Over Mode (Disabled)

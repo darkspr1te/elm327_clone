@@ -36,6 +36,16 @@ RS232 Rx LED (pin 25), RB4
 RS232 Tx LED (pin 26),RB5
 OBD Rx LED (pin 27) RB6/PGC
 OBD Tx LED (pin 28)RB7/PGD
+ * 0 - Automatic selection
+1 - SAE J1850 PWM (41.6 kBaud)
+2 - SAE J1850 VPW (10.4 Kbaud)
+3 - ISO 9141-2 (5 baud initialization 10.4 kb)
+4 - ISO 14230-4 KWP (5 baud initialization 10.4 kbaud)
+5 - ISO 14230-4 KWP (fast initialization 10.4 kbaud)
+6 - ISO 15765-4 CAN (11 bit ID, 500 kbaud)
+7 - ISO 15765-4 CAN (29 bit ID, 500 kbaud) 
+8 - ISO 15765-4 CAN (11 bit ID, 250 kbaud) 
+9 - ISO 15765-4 CAN (29 bit ID, 250 kbaud) 
 */
 
 #include <xc.h>
@@ -66,21 +76,24 @@ OBD Tx LED (pin 28)RB7/PGD
 #define ISOK        PORTBbits.RB0
 #define FCY 4000000
 #define UART_BITRATE 38400
+#define UART_READ_TIMEOUT 20000
 
 void Delay(unsigned int count);
 void Heartbeat(void);
 
-int heartbeatCount;
-int heartbeatCountTwo;
-unsigned char Txdata[] = "\r\niGeek ODB2 Open Sourced ELM327 Clone firmware ";
+volatile int heartbeatCount;
+//int heartbeatCountTwo;
+unsigned char device_name[] = "\n\riGeek ODB2 Open Sourced ELM327 Clone firmware\r\n";
+unsigned char device_name_two[] = "\r\nTest Statement Two";
 unsigned char Newline[] = "\n\r";
 unsigned char spacing[] = "   ";
-unsigned char inttext[] = "   INT ";
+unsigned char inttext[] = "   INNT ";
 unsigned char newvals[] = "";
 float volts;
 unsigned int ADCValue = 0;
 unsigned char ADCStringVal[4];
 unsigned char ADCStringValTwo[4];
+unsigned char stringval[10];
 
 
 void setup (void)
@@ -92,8 +105,8 @@ void setup (void)
     WPUB  = 0b00000000;
    // ADCON1=0x7F;
 
-    
-    PORTBbits.RB0 = 1;
+    PORTB=0b1111111;
+ /*   PORTBbits.RB0 = 1;
     PORTBbits.RB1 = 1;
     PORTBbits.RB2 = 1;
     PORTBbits.RB3 = 1;
@@ -101,7 +114,7 @@ void setup (void)
     PORTBbits.RB5 = 1;
     PORTBbits.RB6 = 1;
     PORTBbits.RB7 = 1;
-    
+   */ 
 }
 void Delay(unsigned int count)
 {
@@ -109,25 +122,6 @@ void Delay(unsigned int count)
     while(count--);
 }    
 
-void Heartbeat(void)
-{
-    // Toggle LED every 256th time this function is called
-    if (heartbeatCount < 255)
-    {
-        heartbeatCount++;
-    }
-    else
-    {
-        heartbeatCount = 0;
-        RSRX_LED ^= 1;
-        RSTX_LED ^= 1;
-      //  RSTX_LED ^= 1;
-        OBDRX_LED ^= 1;
-        OBDTX_LED ^= 1;
-       // OBDTX_LED ^= 1;
-    
-    }
-}
 
 
 
@@ -169,6 +163,14 @@ unsigned char* returnString(unsigned char inputValue)
     }
     return processedString; // Return the processed string.
 }
+ void putch(char data) {    
+     while (!TXIF)    
+         continue;    
+     TXREG = data;    
+ }    
+ // reads a byte from UART 1
+ 
+
 void UART1Init(long baud_rate){
     RCSTA1bits.SPEN = 1;	// enable port
     TRISCbits.TRISC7 = 1;	// make rx pin an input
@@ -188,7 +190,7 @@ unsigned int ADCRead(unsigned char ch)
  //  ADCON0=0x00;
    ADCON0=(ch<<2);   //Select ADC Channel
     ADCON0bits.ADON=1;//switch on the adc module
-    __delay_us(5);
+    __delay_us(15);
     ADCON0bits.GODONE=1;  //Start conversion
     while(ADCON0bits.GODONE); //wait for the conversion to finish
     ADCON0bits.ADON=0;//switch off adc
@@ -222,42 +224,108 @@ void config_adc(void)
 }
 void do_voltage(void)
 {
-     if (heartbeatCountTwo < 255)
-    {
-        heartbeatCountTwo++;
-    }
-    else
-    {
-        heartbeatCountTwo = 0;
+    
        ADCValue=ADCRead(0);     
   //   volts = 7 * ((float)ADCValue)/1024.0; //VCFG = 0b01 VNCFG=0b1
       volts = 5.7 * ((float)ADCValue)/1024.0; //VCFG = 0b11 VNCFG=0b1
       printf("Voltage V%6.2f\r\n", volts);
     
-    }
+
  
 }
+char UART1RxByte(void)
+{
+	int timeout = 0;
+	// wait for data to be available, or a timeout to occur
+    while (!PIR1bits.RC1IF && timeout < UART_READ_TIMEOUT)
+    	timeout++;
+
+	// on timeout, return -1
+	if (timeout == UART_READ_TIMEOUT)
+		return -1;
+	return RCREG1;							// return data byte
+
+}
+void Heartbeat(void)
+{
+    // Toggle LED every 256th time this function is called
+    if (heartbeatCount < 225)
+    {
+        heartbeatCount++;
+  //      printf("HB\n\r");
+        RSRX_LED ^= 1;
+        RSTX_LED ^= 1;
+    }
+    else
+    {
+        heartbeatCount = 0;
+
+
+      //  RSTX_LED ^= 1;
+        OBDRX_LED ^= 1;
+        OBDTX_LED ^= 1;
+        __delay_ms(10);
+       // OBDTX_LED ^= 1;
+    
+    }
+}
+
 void main(void) {
     setup();
     unsigned int vale=0;
     unsigned int stats;
     volatile float voltage;  
+    volatile char AT_COMMAND;
 
     config_adc();
 
     UART1Init(UART_BITRATE);
-          puts1USART((char *)Txdata);
+    puts1USART((char *)device_name);
     while (1) {
+      Heartbeat();
       while (PIR1bits.TX1IF == 0);
-
-  
-
-        do_voltage();
+        
+       // 
+        
+       // Heartbeat();
+        if (RC1IF==1)
+        {
+             
+          //   puts1USART((char *)Txdata);   
+             AT_COMMAND=RCREG;
+            //puts1USART((char *)AT_COMMAND);
+          //  printf("\r\n");
+             
+            puts1USART(itoa(stringval,AT_COMMAND,10));
+           // printf(" ");
+            printf(" %c\n\r", AT_COMMAND);
+            // RC1IF=0;
+            // puts1USART((char *)Newline);
+          //  do_voltage();
+            if (AT_COMMAND=='v')
+             {
+                 do_voltage();
+                 AT_COMMAND=0;
+                 printf("stage2\n\r");
+             }
+            if (AT_COMMAND=='c')
+             {
+               //  do_voltage();
+              //   AT_COMMAND=0;
+                 puts1USART( itoa(stringval,heartbeatCount,10));
+                 printf("\n\r");
+             }
+        }
+   
+            
+        // if (UART1RxByte() == -1)
+      //       puts1USART((char *)Txdata);
+       // puts1USART(AT_COMMAND);
    //   puts1USART('\r');
      // newvals[0]=ftoa(volts,0);
     //   puts1USART(ftoa(volts,0)); //convert to string
 
-      Heartbeat();
+     
       
 
      //__delay_ms(1000);
@@ -268,9 +336,3 @@ void main(void) {
 
     return;
 }
- void putch(char data) {    
-     while (!TXIF)    
-         continue;    
-     TXREG = data;    
- }    
- 
